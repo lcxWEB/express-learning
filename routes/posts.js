@@ -39,6 +39,48 @@ router.get('/:id', (req, res) => {
     res.send(post);
 });
 
+router.post('/', (req, res) => {
+    console.log(req.body);
+    const newPost = {
+        id: posts.length + 1,
+        title: req.body.title,
+        content: req.body.content,
+    };
+    
+    if (!newPost.title || !newPost.content) {
+        return res.status(400).send({error: 'Title and content are required'});
+    }
+    posts.push(newPost);
+    res.status(201).send(posts);
+});
+
+// update a post
+router.put('/:id', (req, res) => {
+    const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) {
+        return res.status(404).send({error: `The post with the given ID ${req.params.id} was not found.`});
+    }
+    post.title = req.body.title;
+    post.content = req.body.content;
+    res.send(post);
+});
+
+// delete a post
+router.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const post = posts.find(p => p.id === id);
+    if (!post) {
+        return res.status(404).send({error: `The post with the given ID ${req.params.id} was not found.`});
+    }
+    
+    // posts = posts.filter(p => p.id !== id);
+    // res.send(posts);
+
+    const index = posts.indexOf(post);
+    posts.splice(index, 1);
+    res.send(posts);
+});
+
 // commons js module system
 // module.exports = router;
-export default router;
+export default router; 

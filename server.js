@@ -8,7 +8,9 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-// app.use(express.json());
+// body parser middleware
+app.use(express.json()); // req.body
+app.use(express.urlencoded({ extended: false })); // req.form-data
 
 // Routes
 app.use('/api/posts', posts);
