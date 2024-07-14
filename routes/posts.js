@@ -1,9 +1,11 @@
+// commons js module system
 // const express = require('express');
 
+// es6 module system
 import express from 'express';
 
 const router = express.Router();
-
+ 
 let posts = [
     { id: 1, title: 'Post 1', content: 'This is post 1' },
     { id: 2, title: 'Post 2', content: 'This is post 2' },
@@ -20,7 +22,7 @@ let posts = [
 router.get('/', (req, res) => {
     // when req.query.limit = 0, the limit will be 10, because 0 is falsy
     const limit = parseInt(req.query.limit) || 10;
-    console.log(limit);
+    // console.log(limit);
     if (isNaN(limit) || limit < 1) {
         return res.status(400).send({error: 'Invalid limit query'});
         // return;
@@ -29,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     // res.send(posts);
     const post = posts.find(p => p.id === parseInt(req.params.id));
     // const post = posts.filter(p => p.id === parseInt(req.params.id));
